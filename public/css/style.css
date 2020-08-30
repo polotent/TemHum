@@ -1,0 +1,26 @@
+h6 {
+    text-align: center;
+    font-size: 20px;
+}
+
+p {
+    margin-bottom: 0px;
+}
+
+.date-wrapper {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.chart-wrapper {
+    padding: 10px;
+}
+
+.chart-block {
+    background-color: rgb(185, 185, 185);
+    padding: 10px;
+}
+
+.chart {
+    background-color: #fff;
+}

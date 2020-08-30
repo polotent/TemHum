@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- css -->
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/Chart.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/bootstrap-datepicker.css">
+    <!-- js -->
+    <script src="/js/jquery-3.5.1.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/bootstrap-datepicker.js"></script>
+    <script src="/js/Chart.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+  </head>
+  <body> 
+    <header class="navbar navbar-dark bg-dark">
+      <div class="row">
+        <div class="col-lg-12">
+          <a class="navbar-brand" href="/">IoT Dashboard</a>
+        </div>
+      </div>
+    </header>
+    <div class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="row">
+              <div class="col-lg-12 date-wrapper">
+                <p>Pick date: <input data-date-format="yyyy/m/dd" id="datepicker"></p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 chart-wrapper">
+                <div class=chart-block>
+                  <!-- Chart humidity -->
+                  <h6 id="pick-date">Humidity</h6>
+                  <div class="chart">
+                    <canvas id="humidity-chart"></canvas>
+                  </div>
+                </div>                
+              </div>
+              <div class="col-lg-6 chart-wrapper">
+                <div class="chart-block">
+                  <!-- Chart temperature -->
+                  <h6 id="pick-date">Temperature</h6>
+                  <div class="chart">
+                    <canvas id="temperature-chart"></canvas>
+                  </div>               
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- js -->
+    <script src="/js/data.js" type="module"></script>
+  </body>
+</html> 
