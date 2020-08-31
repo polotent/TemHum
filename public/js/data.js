@@ -2,12 +2,27 @@ import { getChart } from "./getChart.js"
 
 let socket = io();
 
-let dateInput = document.getElementById('datepicker');
+let serverStatus = document.getElementById("server-status");
+
+let dateInput = document.getElementById("datepicker");
 
 let humidityChartContainer = document.getElementById("humidity-chart-container");
 let temperatureChartContainer = document.getElementById("temperature-chart-container");
 
 let humidityChart, temperatureChart;
+
+socket.on("connect", () => {
+  serverStatus.innerHTML = "connected";
+});
+
+socket.on("reconnect", () => { 
+  serverStatus.innerHTML = "connected";
+  socket.emit("date", $("#datepicker").val());
+});
+
+socket.on("disconnect", () => {
+  serverStatus.innerHTML = "disconnected";
+});  
 
 socket.on("data", (response) => {
   humidityChartContainer.innerHTML = '&nbsp;';

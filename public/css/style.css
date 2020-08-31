@@ -28,3 +28,7 @@ p {
 .chart {
     background-color: #fff;
 }
+
+#server-status {
+    color : #fff;
+}
