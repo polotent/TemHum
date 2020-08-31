@@ -11,16 +11,14 @@ let humidityCtx = humidityCanvas.getContext('2d');
 let temperatureCtx = temperatureCanvas.getContext('2d');
 
 socket.on("data", (response) => {
-    if (response == "empty") {
-      console.log("empty")
-    } else {
-      if (response.date == dateInput.value) {
-        humidityCtx.clearRect(0, 0, humidityCanvas.width, humidityCanvas.height);
-        temperatureCtx.clearRect(0, 0, temperatureCanvas.width, temperatureCanvas.height);
-        updateChart(humidityCtx, "humidity", "%", response.data.humidity, response.data.time, 100);
-        updateChart(temperatureCtx, "temperature", "°C", response.data.temperature, response.data.time, 50);
-      }
+  if (response != null){
+    humidityCtx.clearRect(0, 0, humidityCanvas.width, humidityCanvas.height);
+    temperatureCtx.clearRect(0, 0, temperatureCanvas.width, temperatureCanvas.height);
+    if ((response != "empty") && (response.date == dateInput.value)) {
+      updateChart(humidityCtx, "humidity", "%", response.data.humidity, response.data.time, 100);
+      updateChart(temperatureCtx, "temperature", "°C", response.data.temperature, response.data.time, 50);
     }
+  } 
 });
 
 $("#datepicker").datepicker({
