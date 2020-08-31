@@ -1,5 +1,5 @@
-export function updateChart (ctx, dataLabel, suffix, data, time, maxValue) {
-  let chart = new Chart(ctx, {
+export function getChart (ctx, dataLabel, suffix, data, time, maxValue) {
+  return new Chart(ctx, {
     type: 'line',
     data: {
         labels: time,

@@ -1,24 +1,31 @@
-import { updateChart } from "./updateChart.js"
+import { getChart } from "./getChart.js"
 
 let socket = io();
 
 let dateInput = document.getElementById('datepicker');
 
-let humidityCanvas = document.getElementById('humidity-chart');
-let temperatureCanvas = document.getElementById('temperature-chart');
+let humidityChartContainer = document.getElementById("humidity-chart-container");
+let temperatureChartContainer = document.getElementById("temperature-chart-container");
 
-let humidityCtx = humidityCanvas.getContext('2d');
-let temperatureCtx = temperatureCanvas.getContext('2d');
+let humidityChart, temperatureChart;
 
 socket.on("data", (response) => {
-  if (response != null){
-    humidityCtx.clearRect(0, 0, humidityCanvas.width, humidityCanvas.height);
-    temperatureCtx.clearRect(0, 0, temperatureCanvas.width, temperatureCanvas.height);
-    if ((response != "empty") && (response.date == dateInput.value)) {
-      updateChart(humidityCtx, "humidity", "%", response.data.humidity, response.data.time, 100);
-      updateChart(temperatureCtx, "temperature", "°C", response.data.temperature, response.data.time, 50);
-    }
-  } 
+  humidityChartContainer.innerHTML = '&nbsp;';
+  humidityChartContainer.innerHTML = '<canvas id="humidity-chart"></canvas>';
+
+  temperatureChartContainer.innerHTML = '&nbsp;';
+  temperatureChartContainer.innerHTML = '<canvas id="temperature-chart"></canvas>';
+
+  let humidityCanvas = document.getElementById('humidity-chart');
+  let temperatureCanvas = document.getElementById('temperature-chart');
+  
+  let humidityCtx = humidityCanvas.getContext('2d');
+  let temperatureCtx = temperatureCanvas.getContext('2d');
+
+  if ((response != "empty") && (response.date == dateInput.value)) {
+    humidityChart = getChart(humidityCtx, "humidity", "%", response.data.humidity, response.data.time, 100);
+    temperatureChart = getChart(temperatureCtx, "temperature", "°C", response.data.temperature, response.data.time, 50)
+  }
 });
 
 $("#datepicker").datepicker({
