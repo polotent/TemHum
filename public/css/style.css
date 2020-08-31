@@ -12,6 +12,10 @@ p {
     font-size: 20px;
 }
 
+#datepicker {
+    width: 110px;
+}
+
 .chart-wrapper {
     padding: 10px;
 }

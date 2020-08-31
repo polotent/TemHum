@@ -10,7 +10,9 @@ const net = require('net');
 // database connection
 const DateDoc = require("./models/dateDoc");
 const connect = require("./dbconnect");
-const saveData = require("./saveData")
+const saveData = require("./saveData");
+
+const getDate = require("./getDate");
 
 const httpPort = 5000;
 const tcpPort = 5001;
@@ -22,18 +24,12 @@ io.on('connection', (socket) => {
 	socket.on('date', (date) => {
 		console.log("Got request for", date);
 		DateDoc.findOne({ "date": date }).then(doc => {
-			try {
-				(()=>{
-					return Promise.resolve(socket.emit("data", doc.data));
-				})().then(()=>{
-					console.log("Response for", date, "was sent.");
-				});			
-			} catch (err) {
-				(()=>{
-					return Promise.resolve(socket.emit("data", "empty"));
-				})().then(()=>{
-					console.log("No data was found for", date, "-> sending empty response.");
-				});
+			if (doc != null) {
+				Promise.resolve(socket.emit("data", doc))
+				.then(console.log("Response for", date, "was sent."));
+			} else {
+				Promise.resolve(socket.emit("data", "empty"))
+				.then(console.log("No data was found for", date, "-> sending empty response."));
 			}
 		});
 	});
@@ -54,8 +50,10 @@ tcpServer.listen(tcpPort, function() {
 
 tcpServer.on('connection', function(socket) {
     socket.on('data', function(chunk) {
+		let nowDate = getDate();
+
 		let data = chunk.toString().trim();
-		console.log('Data received from client :', data);
+		console.log('Data received from sensors:', data, "at", nowDate.time);
 		let pairs = {};
 		try {
 			let arr = data.split("&");			
@@ -66,10 +64,15 @@ tcpServer.on('connection', function(socket) {
 		}
 		catch(err){
 			console.log(err);
-		}        
+		}
 
-		saveData(pairs);
+		saveData(pairs).then(doc => 
+			Promise.resolve(io.sockets.emit("data", doc))
+		).finally(
+			console.log("Update for", nowDate.date, "was sent to all connected clients.")
+		);
 	});
+
 	socket.on('error', (err) => {
 		console.log(err);
 	})
