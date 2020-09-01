@@ -1,3 +1,9 @@
+.logo {
+    margin-top: -10px;
+    width: 25px;
+    height: 25px; 
+}
+
 h6 {
     text-align: center;
     font-size: 20px;
@@ -7,9 +13,13 @@ p {
     margin-bottom: 0px;
 }
 
-.date-wrapper {
+.date-wrapper, .message-wrapper {
     margin-top: 10px;
-    font-size: 20px;
+    font-size: 18px;
+}
+
+.message-wrapper {
+    text-align: center;
 }
 
 #datepicker {
@@ -30,5 +40,14 @@ p {
 }
 
 #server-status {
-    color : #fff;
+    color: #fff;
+}
+
+.server-status-wrapper {
+    text-align: right;
+}
+
+#server-status-connected, #server-status-disconnected {
+    width: 40px;
+    height: 40px;
 }

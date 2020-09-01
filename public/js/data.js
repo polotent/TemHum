@@ -3,8 +3,15 @@ import { getChart } from "./getChart.js"
 let socket = io();
 
 let serverStatus = document.getElementById("server-status");
+let serverStatusIconConnected = document.getElementById("server-status-connected");
+let serverStatusIconDisconnected = document.getElementById("server-status-disconnected");
 
 let dateInput = document.getElementById("datepicker");
+
+let infoMessage = document.getElementById("info-message");
+
+let humidityCanvas = document.getElementById('humidity-chart');
+let temperatureCanvas = document.getElementById('temperature-chart');
 
 let humidityChartContainer = document.getElementById("humidity-chart-container");
 let temperatureChartContainer = document.getElementById("temperature-chart-container");
@@ -13,15 +20,21 @@ let humidityChart, temperatureChart;
 
 socket.on("connect", () => {
   serverStatus.innerHTML = "connected";
+  serverStatusIconDisconnected.style.display = "none";
+  serverStatusIconConnected.style.display = "inline-block";
 });
 
 socket.on("reconnect", () => { 
   serverStatus.innerHTML = "connected";
+  serverStatusIconDisconnected.style.display = "none";
+  serverStatusIconConnected.style.display = "inline-block";
   socket.emit("date", $("#datepicker").val());
 });
 
 socket.on("disconnect", () => {
   serverStatus.innerHTML = "disconnected";
+  serverStatusIconConnected.style.display = "none";
+  serverStatusIconDisconnected.style.display = "inline-block";
 });  
 
 socket.on("data", (response) => {
@@ -31,15 +44,20 @@ socket.on("data", (response) => {
   temperatureChartContainer.innerHTML = '&nbsp;';
   temperatureChartContainer.innerHTML = '<canvas id="temperature-chart"></canvas>';
 
-  let humidityCanvas = document.getElementById('humidity-chart');
-  let temperatureCanvas = document.getElementById('temperature-chart');
+  humidityCanvas = document.getElementById('humidity-chart');
+  temperatureCanvas = document.getElementById('temperature-chart');
   
   let humidityCtx = humidityCanvas.getContext('2d');
   let temperatureCtx = temperatureCanvas.getContext('2d');
 
-  if ((response != "empty") && (response.date == dateInput.value)) {
-    humidityChart = getChart(humidityCtx, "humidity", "%", response.data.humidity, response.data.time, 100);
-    temperatureChart = getChart(temperatureCtx, "temperature", "°C", response.data.temperature, response.data.time, 50)
+  if (response == "empty") {
+    infoMessage.style.display = "inline-block";
+  } else {
+    if (response.date == dateInput.value) {
+      infoMessage.style.display = "none";
+      humidityChart = getChart(humidityCtx, "humidity", "%", response.data.humidity, response.data.time, 100);
+      temperatureChart = getChart(temperatureCtx, "temperature", "°C", response.data.temperature, response.data.time, 50);
+    }
   }
 });
 
