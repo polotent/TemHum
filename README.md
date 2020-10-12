@@ -33,9 +33,15 @@ Here is a picture of the real Arduino device
 7. 10kO resistor x1
 8. USB female A
 
+## How to upload Arduino code to the microcontroller
+1. Download Arduino Studio
+2. In libraries manager download "[DHT sensor library](https://www.arduino.cc/reference/en/libraries/dht-sensor-library/)"
+3. Define your SSID, PASS, IP (ip address of your machine with nodejs server and mongodb instance)
+4. Upload scetch to the device connected via USB-B.
+
 ## Requirements to set up the server
 1. NodeJS installed on your machine
-2. MongoDB with "iot_sensors" db created.
+2. MongoDB with empty "iot_dt" db created and empty "iot_sensors" collection in it.
 
 ## Setting up the server
 Go to the project's directory and execute:
