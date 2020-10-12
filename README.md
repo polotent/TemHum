@@ -35,7 +35,7 @@ Here is a picture of the real Arduino device
 
 ## How to upload Arduino code to the microcontroller
 1. Download Arduino Studio
-2. In libraries manager download "[DHT sensor library](https://www.arduino.cc/reference/en/libraries/dht-sensor-library/)"
+2. In libraries manager download [DHT sensor library](https://www.arduino.cc/reference/en/libraries/dht-sensor-library/)
 3. Define your SSID, PASS, IP (ip address of your machine with nodejs server and mongodb instance)
 4. Upload scetch to the device connected via USB-B.
 
