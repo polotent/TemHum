@@ -38,22 +38,28 @@ socket.on("disconnect", () => {
 });  
 
 socket.on("data", (response) => {
-  humidityChartContainer.innerHTML = '&nbsp;';
-  humidityChartContainer.innerHTML = '<canvas id="humidity-chart"></canvas>';
-
-  temperatureChartContainer.innerHTML = '&nbsp;';
-  temperatureChartContainer.innerHTML = '<canvas id="temperature-chart"></canvas>';
-
-  humidityCanvas = document.getElementById('humidity-chart');
-  temperatureCanvas = document.getElementById('temperature-chart');
-  
-  let humidityCtx = humidityCanvas.getContext('2d');
-  let temperatureCtx = temperatureCanvas.getContext('2d');
-
   if (response == "empty") {
+    humidityChartContainer.innerHTML = '&nbsp;';
+    humidityChartContainer.innerHTML = '<canvas id="humidity-chart"></canvas>';
+
+    temperatureChartContainer.innerHTML = '&nbsp;';
+    temperatureChartContainer.innerHTML = '<canvas id="temperature-chart"></canvas>';
+    
     infoMessage.style.display = "inline-block";
   } else {
     if (response.date == dateInput.value) {
+      humidityChartContainer.innerHTML = '&nbsp;';
+      humidityChartContainer.innerHTML = '<canvas id="humidity-chart"></canvas>';
+
+      temperatureChartContainer.innerHTML = '&nbsp;';
+      temperatureChartContainer.innerHTML = '<canvas id="temperature-chart"></canvas>';
+
+      humidityCanvas = document.getElementById('humidity-chart');
+      temperatureCanvas = document.getElementById('temperature-chart');
+      
+      let humidityCtx = humidityCanvas.getContext('2d');
+      let temperatureCtx = temperatureCanvas.getContext('2d');
+      
       infoMessage.style.display = "none";
       humidityChart = getChart(humidityCtx, "humidity", "%", response.data.humidity, response.data.time, 100);
       temperatureChart = getChart(temperatureCtx, "temperature", "°C", response.data.temperature, response.data.time, 50);
